@@ -18,7 +18,6 @@ public:
                     {
                         t[j] = 0;
                         count++;
-                        break;
                     }
                     j++;
                 }
