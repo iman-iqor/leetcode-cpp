@@ -1,8 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <map>
-#include<algorithm>
-using namespace std;
 
 class Solution
 {
@@ -10,65 +8,67 @@ public:
     int longestConsecutive(std::vector<int> &nums)
     {
         std::map<int,int> m;
-        int i = 0;
+        int i =0;
         while(i < nums.size())
         {
             m[nums[i]] = 0;
             i++;
         }
-        std::map<int,int>::iterator it = m.begin();
+        std::map<int,int>::iterator it= m.begin();
         std::map<int,int>::iterator it2;
-        int len = 1;
         int count = 0;
+        int len = 1;
         while(it != m.end())
-        {
+        {   
             it2 = it;
-            ++it2;
+            it2++;
             if(it2 == m.end())
             {
+                std::cout<<"a"<<std::endl;
+                std::cout<<count<<std::endl;
+                std::cout<<len<<std::endl;
                 if(count < len)
                     count = len;
-                break;
+                return count;
             }
-            // std::cout<<it->first<<std::endl;
-            // std::cout<<it2->first<<std::endl;
-            if(it->first +1 == it2->first)
+            if(it->first + 1 == it2->first)
             {
                 len++;
             }
-            else if(it->first != it2->first)
-            {
-                if(len > count)
-                    count = len;
-                len = 1;
-            }
-            else
+            else if(it->first +1 != it2->first)
             {
                 if(count < len)
                     count = len;
+                len = 1;
             }
-            // std::cout<<count<<std::endl;
-            // std::cout<<std::endl;
             it++;
+
         }
+
         return count;
     }
 };
 
 int main()
 {
-    std::vector<int> v ;
-    v.push_back(0);
-    v.push_back(3);
+    std::vector<int> v;
+    // v.push_back(0);
+    // v.push_back(3);
+    // v.push_back(7);
+    // v.push_back(2);
+    // v.push_back(5);
+    // v.push_back(8);
+    // v.push_back(4);
+    // v.push_back(6);
+    // v.push_back(0);
+    // v.push_back(1);
+
+    v.push_back(1);
     v.push_back(2);
-    v.push_back(5);
-    v.push_back(4);
     v.push_back(6);
-    v.push_back(1);
-    v.push_back(1);
-    
-    // v.push_back()
+    v.push_back(7);
+    v.push_back(8);
     Solution s;
     std::cout<<s.longestConsecutive(v)<<std::endl;
-    return 0;
+
 }
