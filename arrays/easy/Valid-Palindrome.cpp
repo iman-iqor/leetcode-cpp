@@ -1,11 +1,10 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include<iostream>
+#include<vector>
+#include<cctype>
 
-class Solution
-{
+class Solution {
 public:
-    bool isPalindrome(std::string s)
+    bool isPalindrome(std::string s) 
     {
         std::vector<char> v;
         int i = 0;
@@ -16,35 +15,29 @@ public:
             i++;
         }
         std::vector<char> v2(v.size());
-        i = v.size();
-        i--;
-        int j = 0;
-        while(i >=0 )
+        i = 0;
+        int len = v.size()-1;
+
+        while(i < v.size())
         {
-            v2[j++]= v[i--];
+            v2[len] = v[i];
+            i++;
+            len--;
         }
-        i=0;
-        // int count = 0;
-        while(i<v.size())
+        i = 0;
+        while(i < v.size())
         {
-            // std::cout<<v2[i];
             if(v[i] != v2[i])
                 return false;
             i++;
         }
-        // std::cout<<std::endl;
-        // std::cout<<count<<std::endl;
-        // std::cout<<v.size()<<std::endl;
-    
-    
         return true;
+        
     }
-    
 };
-
 int main()
 {
     Solution s;
-    std::string str="0P";
+    std::string str="race a car";
     std::cout<<s.isPalindrome(str)<<std::endl;
 }
