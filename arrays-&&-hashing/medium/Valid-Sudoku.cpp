@@ -1,121 +1,82 @@
-#include <iostream>
-#include <vector>
-#include <map>
+#include<vector>
+#include<iostream>
+#include<algorithm>
+#include<set>
 
-class Solution
-{
+
+class Solution {
 public:
-    bool isValidSudoku(std::vector<std::vector<char>> &board)
-    {
-        int i = 0;
-        std::map<char, int> clmB;
-        std::map<char, int> clmE;
-        int clmTotalB = 0;
-        int clmTotalE = 0;
-        int totalB = 0;
-        int totalE = 0;
-
-        while (i < 9)
+    bool isValidSudoku(std::vector<std::vector<char>>& board) {
+        
+        for(int i = 0;i<9;i++)
         {
-            if (board[i][0] == '.')
-                clmTotalB++;
-            else
-                clmB[board[i][0]]++;
-
-            if (board[i][8] == '.')
-                clmTotalE++;
-            else
-                clmE[board[i][8]]++;
-
-            std::map<char, int> m;
-            std::map<char, int> c;
-            int point = 0;
-            int pointC= 0;
-            int total = 0;
-            int totalC = 0;
-            int j = 0;
-            while (j < 9)
+            int startRow=(i/3)*3;
+            int startColumn=(i%3)*3;
+            std::set<int> seen;
+            for(int m = startRow;m < startRow+3;m++)
             {
-                if (board[i][j] == '.')
-                    point++;
-                else
-                    m[board[i][j]]++;
-
-                if (board[j][i] == '.')
-                    pointC++;
-                else
-                    c[board[j][i]]++;
-
-                if (i % 3 == 0 && j % 3 == 0)
+                for(int n=startColumn;n <startColumn+3 ;n++)
                 {
-                    int boxTotal = 0;
-                    std::map<char, int> box;
-                    int tmp = 0;
-                    int k = i;
-                    while (k < i + 3)
+                    if(board[m][n]=='.' )
+                        continue;
+                    if(seen.find(board[m][n])!= seen.end())
                     {
-                        int o = j;
-                        while (o < j + 3)
-                        {
-                            if (board[k][o] == '.')
-                                boxTotal++;
-                            else
-                                box[board[k][o]]++;
-                            o++;
-                        }
-                        k++;
-                    }
-                    tmp = box.size() + boxTotal;
-                    if (tmp != 9)
-                    {
-                        // std::cout << "box" << std::endl;
                         return false;
                     }
-                    
+                    seen.insert(board[m][n]);
                 }
-                j++;
-            }
-            total = m.size() + point;
-
-            if (total != 9)
-            {
-                // std::cout << "map not 9" << std::endl;
-                return false;
-            }
-            total = c.size() + pointC;
-
-            if (total != 9)
-            {
-                // std::cout << "map not 9" << std::endl;
-                return false;
             }
             
+            std::set<char> rows;
+            for(int j=0;j <9;j++)
+            {
+                if(board[i][j]=='.' )
+                    continue;
+                if(rows.find(board[i][j]) != rows.end())
+                {
+                    return false;
+                }
+                // std::cout<<board[i][j]<<",";
+                rows.insert(board[i][j]);
+            }
+            std::set<char> columns;
+            for(int j=0;j <board.size();j++)
+            {
+                if(board[j][i]=='.' )
+                    continue;
+                if(columns.find(board[j][i]) != columns.end())
+                {
+                    std::cout<<"this is the probleme: "<<board[j][i]<<std::endl;
+                    return false;
+                }
+                // std::cout<<"i"<<i<<"j"<<j<<board[j][i]<<",";
+                columns.insert(board[j][i]);
+            }
             
-            i++;
+            // std::cout<<std::endl;
         }
-        totalB = clmTotalB + clmB.size();
-        totalE = clmTotalE + clmE.size();
-        if (totalB != 9 || totalE != 9)
-        {
-            // std::cout<<"B or E"<<std::endl;
-            return false;
-        }
+
+        
         return true;
     }
 };
 
+
+
+
+
 int main()
 {
-    std::vector<std::vector<char>> v = { { '.', '.', '4', '.', '.', '.', '6', '3', '.' }, 
-                                        { '.', '.', '.', '.', '.', '.', '.', '.', '.' },
-                                        { '5', '.', '.', '.', '.', '.', '.', '9', '.' },
-                                        { '.', '.', '.', '5', '6', '.', '.', '.', '.' },
-                                        { '4', '.', '3', '.', '.', '.', '.', '.', '1' },
-                                        { '.', '.', '.', '7', '.', '.', '.', '.', '.' },
-                                        { '.', '.', '.', '5', '.', '.', '.', '.', '.' },
-                                        { '.', '.', '.', '.', '.', '.', '.', '.', '.' },
-                                        { '.', '.', '.', '.', '.', '.', '.', '.', '.' } };
+    std::vector<std::vector<char>> v = { { '.', '.', '4', '.', '5', '.', '.', '1', '.' }, 
+                                        { '.', '4', '.', '3', '.', '.', '.', '.', '.' },
+                                        { '.', '.', '.', '.', '.', '3', '.', '.', '1' },
+                                        { '8', '.', '.', '.', '.', '.', '.', '2', '.' },
+                                        { '.', '.', '2', '.', '7', '.', '.', '.', '.' },
+                                        { '.', '1', '5', '.', '.', '.', '.', '.', '.' },
+                                        { '.', '.', '.', '.', '.', '2', '.', '.', '.' },
+                                        { '.', '2', '.', '9', '.', '.', '.', '.', '.' },
+                                        { '.', '.', '4', '.', '.', '.', '.', '.', '.' } };
 
         Solution s;
-    s.isValidSudoku(v);
+    std::cout<<"the return value: "<<s.isValidSudoku(v)<<std::endl;
 }
