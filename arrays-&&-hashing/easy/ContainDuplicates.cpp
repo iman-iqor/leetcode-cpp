@@ -1,28 +1,24 @@
-#include <iostream>
-#include <vector>
+#include<iostream>
+#include<vector>
+#include<map>
+#include<algorithm>
 
-class Solution
-{
+class Solution {
 public:
-    bool hasDuplicate(std::vector<int> &nums)
-    {
-        int i = 0;
-        while (i < nums.size())
+    bool hasDuplicate(std::vector<int>& nums) {
+        std::map<int,int> map;
+        int i =0;
+        while(i< nums.size())
         {
-
-            int j = 0;
-            while (j < nums.size())
+            if(map.find(nums[i])!= map.end())
             {
-
-                if (i != j &&nums[i] == nums[j])
-                {
-                    return 1;
-                }
-                j++;
+                // std::cout<<"has duplicate"<<std::endl;
+                return true;
             }
+            map[nums[i]]=i;
             i++;
         }
-        return 0;
+        return false;
     }
 };
 
