@@ -1,31 +1,14 @@
-#include <iostream>
-#include <string>
-class Solution
-{
+#include<string>
+#include<algorithm>
+
+
+class Solution {
 public:
-    bool isAnagram(std::string s, std::string t)
-    {
-        if(s.size() == t.size())
-        {
-            int i = 0;
-            int count = 0;
-            while(i < s.size())
-            {
-                int j = 0;
-                while(j < t.size())
-                {
-                    if(s[i] == t[j])
-                    {
-                        t[j] = 0;
-                        count++;
-                    }
-                    j++;
-                }
-                if(count  == s.size())
-                    return true;
-                i++;
-            }
-        }
+    bool isAnagram(std::string s, std::string t) {
+       std::sort(s.begin(),s.end());
+       std::sort(t.begin(),t.end());
+       if(s==t)
+            return true;
         return false;
     }
 };
